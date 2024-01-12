@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: test-docker-service-deployment
+  labels:
+    app: test-docker-service
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: test-docker-service
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 1
+      maxSurge: 1
+  template:
+    metadata:
+      labels:
+        app: test-docker-service
+    spec:
+      containers:
+      - name: test-docker-service
+        image: muzzzic221/test-docker-service:v1.0
+        ports:
+        - containerPort: 8000
